@@ -13,15 +13,26 @@
   }
 }
 
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 5rem;
+}
+
+.save-button {
+  margin-top: 1rem;
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: #e1e2d3;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(88, 89, 96);
 }
 
 .App-link {
@@ -35,4 +46,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+aside.emoji-picker-react {
+  position: absolute;
 }
