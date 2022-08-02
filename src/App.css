@@ -51,3 +51,8 @@
 aside.emoji-picker-react {
   position: absolute;
 }
+
+.input-style {
+  width: 30px;
+  font-size: 30px;
+}

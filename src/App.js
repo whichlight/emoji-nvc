@@ -6,7 +6,7 @@ import Picker from "emoji-picker-react";
 // "the further the way from your project, the higher it is. I like it." ~noman
 
 //todo
-//turn this into a loop to clean things up a bit
+//speed things up
 
 import logo from "./logo.svg";
 import "./App.css";
@@ -18,8 +18,8 @@ const options = [
 
 const Prompt = (props) => {
   const onEmojiClick = (event, emojiObject) => {
-    props.setInput((prevInput) => prevInput + emojiObject.emoji);
-    // props.setInput(emojiObject.emoji);
+    //props.setInput((prevInput) => prevInput + emojiObject.emoji);
+    props.setInput(emojiObject.emoji);
     props.setPicker(false);
   };
 
