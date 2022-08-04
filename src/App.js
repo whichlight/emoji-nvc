@@ -27,32 +27,35 @@ const Prompt = (props) => {
     }));
   };
 
+  const onPickerChange = () => {
+    props.setPromptFields((prevFields) => ({
+      ...prevFields,
+      [key]: {
+        ...prevFields[key],
+        prompt: props.promptFields[key].prompt,
+      },
+    }));
+  };
+
+  const onPickerClick = () => {
+    props.setPromptFields((prevFields) => {
+      const pickerVal = !prevFields[key].picker;
+      return {
+        ...prevFields,
+        [key]: { ...prevFields[key], picker: pickerVal },
+      };
+    });
+  };
+
   return (
     <div>
       <span>{props.promptFields[key].label} </span>
-
       <span className="picker-container">
         <input
           className="input-style"
           value={props.promptFields[key].prompt}
-          onChange={() =>
-            props.setPromptFields((prevFields) => ({
-              ...prevFields,
-              [key]: {
-                ...prevFields[key],
-                prompt: props.promptFields[key].prompt,
-              },
-            }))
-          }
-          onClick={() =>
-            props.setPromptFields((prevFields) => {
-              const pickerVal = !prevFields[key].picker;
-              return {
-                ...prevFields,
-                [key]: { ...prevFields[key], picker: pickerVal },
-              };
-            })
-          }
+          onChange={onPickerChange}
+          onClick={onPickerClick}
         />
         {props.promptFields[key].picker && (
           <Picker onEmojiClick={onEmojiClick} />
