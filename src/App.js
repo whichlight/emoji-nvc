@@ -17,83 +17,72 @@ const options = [
 ];
 
 const Prompt = (props) => {
+  const key = props.index;
+
   const onEmojiClick = (event, emojiObject) => {
     //props.setInput((prevInput) => prevInput + emojiObject.emoji);
-    props.setInput(emojiObject.emoji);
-    props.setPicker(false);
+    props.setPromptFields((prevFields) => ({
+      ...prevFields,
+      [key]: { ...prevFields[key], prompt: emojiObject.emoji, picker: false },
+    }));
   };
 
   return (
     <div>
-      <span>{props.label} </span>
+      <span>{props.promptFields[key].label} </span>
 
       <span className="picker-container">
         <input
           className="input-style"
-          value={props.input}
-          onChange={() => props.setInput}
-          onClick={() => props.setPicker((val) => !val)}
+          value={props.promptFields[key].prompt}
+          onChange={() =>
+            props.setPromptFields((prevFields) => ({
+              ...prevFields,
+              [key]: {
+                ...prevFields[key],
+                prompt: props.promptFields[key].prompt,
+              },
+            }))
+          }
+          onClick={() =>
+            props.setPromptFields((prevFields) => {
+              const pickerVal = !prevFields[key].picker;
+              return {
+                ...prevFields,
+                [key]: { ...prevFields[key], picker: pickerVal },
+              };
+            })
+          }
         />
-        {props.showPicker && <Picker onEmojiClick={onEmojiClick} />}
+        {props.promptFields[key].picker && (
+          <Picker onEmojiClick={onEmojiClick} />
+        )}
       </span>
     </div>
   );
 };
 
 const App = () => {
-  let showPickers = Array(4).fill(null);
-  let setShowPickers = Array(4).fill(null);
-  let prompts = Array(4).fill(null);
-  let setPrompts = Array(4).fill(null);
-  const labels = ["when u ", "i feel ", "bc i need ", "would u pls "];
+  const [promptFields, setPromptFields] = useState({
+    when: { label: "when u ", prompt: "", picker: false },
+    feel: { label: "i feel ", prompt: "", picker: false },
+    need: { label: "bc i need ", prompt: "", picker: false },
+    pls: { label: "would u pls ", prompt: "", picker: false },
+  });
 
-  const [showPicker1, setShowPicker1] = useState(false);
-  const [prompt1, setPrompt1] = useState("");
-
-  showPickers[0] = showPicker1;
-  setShowPickers[0] = setShowPicker1;
-  prompts[0] = prompt1;
-  setPrompts[0] = setPrompt1;
-
-  const [showPicker2, setShowPicker2] = useState(false);
-  const [prompt2, setPrompt2] = useState("");
-
-  showPickers[1] = showPicker2;
-  setShowPickers[1] = setShowPicker2;
-  prompts[1] = prompt2;
-  setPrompts[1] = setPrompt2;
-
-  const [showPicker3, setShowPicker3] = useState(false);
-  const [prompt3, setPrompt3] = useState("");
-
-  showPickers[2] = showPicker3;
-  setShowPickers[2] = setShowPicker3;
-  prompts[2] = prompt3;
-  setPrompts[2] = setPrompt3;
-
-  const [showPicker4, setShowPicker4] = useState(false);
-  const [prompt4, setPrompt4] = useState("");
-
-  showPickers[3] = showPicker4;
-  setShowPickers[3] = setShowPicker4;
-  prompts[3] = prompt4;
-  setPrompts[3] = setPrompt4;
-
-  const promptsFill = showPickers.map((e, i) => {
+  const promptsFill = Object.keys(promptFields).map((e, i) => {
     return (
       <Prompt
-        key={labels[i]}
-        label={labels[i]}
-        input={prompts[i]}
-        setInput={setPrompts[i]}
-        showPicker={showPickers[i]}
-        setPicker={setShowPickers[i]}
+        key={e}
+        index={e}
+        promptFields={promptFields}
+        setPromptFields={setPromptFields}
       />
     );
   });
 
-  const displayResponses = prompts.map((e, i) => {
-    return <span key={i}>{e}</span>;
+  const displayResponses = Object.keys(promptFields).map((e, i) => {
+    return <span key={e}>{promptFields[e].prompt}</span>;
   });
 
   return (
