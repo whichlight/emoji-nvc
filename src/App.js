@@ -8,13 +8,7 @@ import Picker from "emoji-picker-react";
 //todo
 //speed things up
 
-import logo from "./logo.svg";
 import "./App.css";
-
-const options = [
-  { value: "😵", label: "😵" },
-  { value: "☺️", label: "☺️" },
-];
 
 const Prompt = (props) => {
   const key = props.index;
@@ -73,7 +67,7 @@ const App = () => {
     pls: { label: "would u pls ", prompt: "", picker: false },
   });
 
-  const promptsFill = Object.keys(promptFields).map((e, i) => {
+  const displayPrompts = Object.keys(promptFields).map((e, i) => {
     return (
       <Prompt
         key={e}
@@ -93,7 +87,7 @@ const App = () => {
       <header className="App-header">
         <div className="form-wrapper">
           <h2>emoji nvc</h2>
-          {promptsFill}
+          {displayPrompts}
           <button className="save-button">save</button>
           <div>{displayResponses}</div>
         </div>
